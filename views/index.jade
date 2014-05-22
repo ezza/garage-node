@@ -8,13 +8,8 @@ html
   body
     #container
       br
-      button#leftGarage Left Garage
+      button#rightGarage Open Sesame
       br
-      br
-      button#rightGarage Right Garage
-      br
-      br
-      button#bothGarage Both Garages
 
 script(type="text/javascript")
   $("button#leftGarage").click(function() { $.post('/api/garage/left', function(data) { }); });
