@@ -60,6 +60,35 @@ app.get("/api/garage/open", function(req, res) {
 	}
 });
 
+app.get("/api/garage/test", function(req, res) {
+	if (req.param('password') == process.env.PASSWORD) {
+		async.series([
+			function(callback) {
+				// Open pin for output
+				gpio.open(config.LEFT_GARAGE_PIN, "output", callback);
+			},
+			function(callback) {
+				// Turn the relay on
+				gpio.write(config.LEFT_GARAGE_PIN, config.RELAY_ON, callback);
+			},
+			function(callback) {
+				// Turn the relay off after delay to simulate button press
+				delayPinWrite(config.LEFT_GARAGE_PIN, config.RELAY_OFF, callback);
+			},
+			function(err, results) {
+				setTimeout(function() {
+					// Close pin from further writing
+					gpio.close(config.LEFT_GARAGE_PIN);
+					// Return json
+					res.json("ok");
+				}, config.RELAY_TIMEOUT);
+			}
+		]);
+	} else  {
+		res.json('incorrect password :O');
+	}
+});
+
 app.post("/api/garage/right", auth, function(req, res) {
 	async.series([
 		function(callback) {
