@@ -38,6 +38,11 @@ In the root directory there is a file called `config.js`. In here you will find 
  * `RELAY_ON` - Relay on state.
  * `RELAY_OFF` - Relay off state.
  * `RELAY_TIMEOUT` - How long the relay should stay on before turning off.
+ * 
+
+## Startup
+
+PASSWORD=password node app.js
 
 ## Gotchas
 
